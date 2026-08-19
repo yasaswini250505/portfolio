@@ -3752,8 +3752,9 @@
           const saveData = navigator.connection && navigator.connection.saveData;
           const isMobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 520;
 
-          // minimal fallback: static decorative line when canvas missing, mobile, or user opts out
-          if (!canvas || reduced || saveData || isMobile) {
+          // Use a static fallback only when motion is disabled or data saving is on.
+          // Mobile uses the lightweight animated version below.
+          if (!canvas || reduced || saveData) {
             if (!canvas) {
               if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
               window.addEventListener('beforeunload', () => window.scrollTo(0, 0));
@@ -3801,13 +3802,13 @@
 
           let ctx = canvas.getContext('2d');
           let dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+          const stage = canvas.parentElement;
           function resize() {
-            const rect = canvas.getBoundingClientRect();
+            const rect = stage.getBoundingClientRect();
+            if (rect.width < 1 || rect.height < 1) return;
             dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-            canvas.width = Math.max(300, rect.width) * dpr;
-            canvas.height = Math.max(120, rect.height) * dpr;
-            canvas.style.width = rect.width + 'px';
-            canvas.style.height = rect.height + 'px';
+            canvas.width = Math.round(rect.width) * dpr;
+            canvas.height = Math.round(rect.height) * dpr;
             ctx = canvas.getContext('2d');
             ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
             ctx.lineJoin = 'round';
@@ -3840,8 +3841,12 @@
             }
             lastFrame = now;
 
-            const rect = canvas.getBoundingClientRect();
+            const rect = stage.getBoundingClientRect();
             const w = rect.width, h = rect.height;
+            if (w < 1 || h < 1) {
+              requestAnimationFrame(draw);
+              return;
+            }
             ctx.clearRect(0, 0, w, h);
 
             // subtle grid
@@ -3907,6 +3912,9 @@
 
           resize();
           window.addEventListener('resize', resize, { passive: true });
+          if ('ResizeObserver' in window) {
+            new ResizeObserver(resize).observe(stage);
+          }
           requestAnimationFrame(draw);
 
           // ensure reload loads at top
