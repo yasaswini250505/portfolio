@@ -1468,10 +1468,47 @@
 
       .certifications-grid {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        width: min(760px, 100%);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        width: min(900px, 100%);
         gap: 14px;
         margin-top: 34px;
+        align-items: stretch;
+      }
+
+      .certification-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+        min-height: 132px;
+      }
+
+      .certification-card.is-hidden {
+        display: none;
+      }
+
+      .certification-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 18px;
+        padding: 10px 18px;
+        border-radius: 999px;
+        border: 1px solid rgba(0, 119, 255, 0.35);
+        background: rgba(0, 119, 255, 0.08);
+        color: var(--accent-2);
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.25s ease;
+      }
+
+      .certification-toggle:hover {
+        background: rgba(0, 119, 255, 0.16);
+        box-shadow: 0 0 18px rgba(0, 119, 255, 0.16);
       }
 
       .toolkit-card.certification-card {
@@ -2457,6 +2494,243 @@
         border-color: rgba(0, 119, 255, 0.72);
         background: rgba(0, 119, 255, 0.12);
       }
+
+      /* Compact, single-column layout for phones. Kept at the end so these
+         rules consistently take priority over the wider tablet styles above. */
+      @media (max-width: 700px) {
+        html {
+          scroll-padding-top: 76px;
+        }
+
+        .container {
+          width: calc(100% - 32px);
+          max-width: 1680px;
+        }
+
+        nav {
+          min-height: 64px;
+          padding: 10px 0;
+        }
+
+        .brand {
+          font-size: 26px;
+        }
+
+        /* Contact links remain available in the contact section; hiding them
+           here gives the menu button enough room on very narrow phones. */
+        nav .nav-icon-link {
+          display: none;
+        }
+
+        .nav-icons {
+          margin-left: auto;
+        }
+
+        .nav-toggle {
+          width: 44px;
+          height: 40px;
+        }
+
+        nav.open .nav-links {
+          align-items: stretch;
+          justify-content: flex-start;
+          padding: 12px 0 4px;
+        }
+
+        nav.open .nav-links li {
+          flex: 1 1 calc(50% - 6px);
+        }
+
+        nav.open .nav-links a {
+          width: 100%;
+          min-height: 42px;
+          padding: 10px 8px;
+          border: 1px solid rgba(0, 119, 255, 0.18);
+          background: rgba(0, 119, 255, 0.06);
+        }
+
+        .hero {
+          padding: 22px 0 36px;
+        }
+
+        .hero-grid,
+        .hero-content {
+          width: 100%;
+        }
+
+        .hero-content {
+          gap: 16px;
+        }
+
+        .hero-mobile-photo {
+          margin: 2px auto 4px;
+        }
+
+        .hero-name {
+          font-size: clamp(30px, 10vw, 42px);
+          letter-spacing: -1.2px;
+        }
+
+        .hero-name .surname {
+          margin-right: 0;
+        }
+
+        .intro-lines {
+          gap: 8px;
+        }
+
+        .hero-actions,
+        .hero-socials {
+          display: grid;
+          grid-template-columns: 1fr;
+          width: 100%;
+          gap: 10px;
+        }
+
+        .hero-actions .btn {
+          width: 100%;
+          min-height: 46px;
+        }
+
+        .social-pill {
+          justify-content: center;
+          min-height: 44px;
+        }
+
+        .section {
+          padding: 42px 0;
+          contain-intrinsic-size: auto 760px;
+        }
+
+        .section h2 {
+          margin-top: 0;
+        }
+
+        #about h2 {
+          font-size: clamp(30px, 9vw, 38px);
+        }
+
+        #about p,
+        .education-desc,
+        .certifications-desc {
+          font-size: 16px;
+          line-height: 1.7;
+        }
+
+        .trend-card {
+          padding: 10px;
+          border-radius: 20px;
+        }
+
+        .chart-stage {
+          height: clamp(220px, 68vw, 280px);
+          border-radius: 15px;
+        }
+
+        .education,
+        .certifications {
+          padding-top: 42px;
+        }
+
+        .education-card {
+          width: 100%;
+          margin-left: 0;
+        }
+
+        .education-card-inner {
+          gap: 14px;
+        }
+
+        .education-school {
+          font-size: 16px;
+        }
+
+        .education-meta {
+          font-size: 13px;
+        }
+
+        .skills-grid,
+        .projects-grid,
+        .certifications-grid,
+        .contact-grid {
+          width: 100%;
+          grid-template-columns: 1fr;
+        }
+
+        .skill-card,
+        .form-card,
+        .contact-card {
+          padding: 20px;
+        }
+
+        .toolkit-card {
+          padding: 20px;
+        }
+
+        .toolkit-item {
+          align-items: flex-start;
+        }
+
+        .toolkit-copy h4 {
+          font-size: 15px;
+        }
+
+        .project-thumb {
+          height: auto;
+          aspect-ratio: 16 / 9;
+        }
+
+        .project-body,
+        .project-actions {
+          padding-inline: 16px;
+        }
+
+        .project-actions .btn {
+          min-height: 44px;
+        }
+
+        .timeline-empty .timeline-item {
+          width: 100%;
+          padding: 36px 20px;
+        }
+
+        .contact-grid {
+          gap: 16px;
+        }
+
+        .form-card input,
+        .form-card textarea {
+          font-size: 16px;
+        }
+
+        .footer-inner {
+          flex-direction: column;
+          gap: 14px;
+        }
+
+        .footer-icons {
+          margin-left: 0;
+        }
+      }
+
+      @media (max-width: 380px) {
+        .container {
+          width: calc(100% - 24px);
+        }
+
+        .hero-name {
+          font-size: clamp(28px, 10.5vw, 36px);
+        }
+
+        .profile-media {
+          width: min(144px, 48vw);
+        }
+
+        .education-title,
+        .certifications-title {
+          font-size: clamp(30px, 11vw, 40px);
+        }
+      }
     </style>
   </head>
   <body>
@@ -2542,7 +2816,7 @@
               </p>
               <div class="hero-actions">
                 <a class="btn btn-primary" href="#projects">View Work</a>
-                <a class="btn btn-outline" href="#contact">Resume</a>
+                <a class="btn btn-outline" href="yasaswini.pdf" download="yasaswini_resume.pdf">Resume</a>
                 <a class="btn btn-outline" href="#contact">Let's Talk</a>
               </div>
               <div class="hero-socials">
@@ -2873,12 +3147,26 @@
           <div class="certifications-grid">
             <article class="skill-card reveal tilt-card toolkit-card certification-card">
               <div>
+                <h3>AI Agent Fundamentals</h3>
+                <p class="certification-meta">Databricks &bull; 2026</p>
+              </div>
+              <a class="btn btn-outline certification-verify" href="https://credentials.databricks.com/0a09cc91-1d75-4ce8-807f-44794b0563de#acc.sb5o63cy" target="_blank" rel="noopener noreferrer">Verify</a>
+            </article>
+            <article class="skill-card reveal tilt-card toolkit-card certification-card">
+              <div>
+                <h3>Generative AI Fundamentals</h3>
+                <p class="certification-meta">Databricks &bull; 2026</p>
+              </div>
+              <a class="btn btn-outline certification-verify" href="https://credentials.databricks.com/912aafe1-727b-4b46-b841-5d1941090d84#acc.N8BOFIxA" target="_blank" rel="noopener noreferrer">Verify</a>
+            </article>
+            <article class="skill-card reveal tilt-card toolkit-card certification-card is-hidden" id="extra-certification-card">
+              <div>
                 <h3>Microsoft Power BI Data Analyst</h3>
                 <p class="certification-meta">Coursera &bull; 2025</p>
               </div>
               <a class="btn btn-outline certification-verify" href="https://www.coursera.org/account/accomplishments/professional-cert/AIE33G4NDLR0" target="_blank" rel="noopener noreferrer">Verify</a>
             </article>
-            <article class="skill-card reveal tilt-card toolkit-card certification-card">
+            <article class="skill-card reveal tilt-card toolkit-card certification-card is-hidden" id="extra-certification-card-2">
               <div>
                 <h3>Advanced Excel</h3>
                 <p class="certification-meta">Udemy &bull; 2025</p>
@@ -2886,6 +3174,7 @@
               <a class="btn btn-outline certification-verify" href="https://www.udemy.com/certificate/UC-c6aae5a7-3293-4d44-b9a1-52aafa6eea07/" target="_blank" rel="noopener noreferrer">Verify</a>
             </article>
           </div>
+          <button class="certification-toggle" type="button" id="toggleCertificates" aria-expanded="false">Show all</button>
         </section>
 
         <section id="contact" class="section container reveal">
@@ -2907,15 +3196,18 @@
             </div>
             <div class="contact-card">
               <p>
-                I am open to entry-level data analyst roles, internships, and collaborative
-                analytics projects. If you have data to explore, I would love to help.
+                I am open to entry-level opportunities, internships, and collaborative projects in <strong>Data Analytics, Business Intelligence, Backend Development, and AI Applications</strong>. If you have data to analyze or an idea to build, I would love to contribute and learn.
               </p>
               <ul style="margin-top: 16px; color: var(--muted); list-style: none;">
+                <li>- Data Analytics &amp; Visualization</li>
                 <li>- Dashboarding &amp; Reporting</li>
-                <li>- Data Cleaning &amp; Prep</li>
-                <li>- Project Management</li>
-                <li>- Insights &amp; Recommendations</li>
-                <li>- Business Understanding</li>
+                <li>- Python &amp; Backend Development</li>
+                <li>- SQL &amp; Database Management</li>
+                <li>- AI &amp; Generative AI Applications</li>
+                <li>- REST API Development</li>
+                <li>- Data Cleaning &amp; Transformation</li>
+                <li>- Business Insights &amp; Recommendations</li>
+                <li>- Collaborative Projects &amp; Problem Solving</li>
               </ul>
               <div style="margin-top: 18px;">
                 <h4>Connect Me</h4>
@@ -3359,6 +3651,24 @@
 
           const mailto = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
           window.location.href = mailto;
+        });
+      })();
+
+      (function () {
+        const toggleButton = document.getElementById('toggleCertificates');
+        const extraCards = [
+          document.getElementById('extra-certification-card'),
+          document.getElementById('extra-certification-card-2')
+        ].filter(Boolean);
+        if (!toggleButton || extraCards.length === 0) return;
+
+        toggleButton.addEventListener('click', () => {
+          const shouldShow = extraCards.some((card) => card.classList.contains('is-hidden'));
+          extraCards.forEach((card) => {
+            card.classList.toggle('is-hidden', !shouldShow);
+          });
+          toggleButton.textContent = shouldShow ? 'Show less' : 'Show all';
+          toggleButton.setAttribute('aria-expanded', String(shouldShow));
         });
       })();
     </script>
