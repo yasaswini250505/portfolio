@@ -2527,6 +2527,7 @@
         }
 
         .nav-toggle {
+          display: inline-grid;
           width: 44px;
           height: 40px;
         }
@@ -2560,15 +2561,42 @@
 
         .hero-content {
           gap: 16px;
+          justify-items: center;
+          text-align: center;
         }
 
         .hero-mobile-photo {
-          margin: 2px auto 4px;
+          width: 100%;
+          margin: 4px auto 8px;
+          place-items: center;
+        }
+
+        .hero-mobile-photo .profile-media {
+          width: min(220px, 62vw);
+          margin-inline: auto;
+          padding: 5px;
+          border-radius: 28px;
+          overflow: visible;
+        }
+
+        .hero-mobile-photo .profile-media::after {
+          inset: -16px;
+          border-radius: 32px;
+          filter: blur(18px);
+        }
+
+        .hero-mobile-photo .profile-photo {
+          aspect-ratio: 3 / 4;
+          border: 3px solid rgba(5, 8, 14, 0.94);
+          border-radius: 23px;
+          object-position: center top;
         }
 
         .hero-name {
+          display: grid;
           font-size: clamp(30px, 10vw, 42px);
           letter-spacing: -1.2px;
+          line-height: 1;
         }
 
         .hero-name .surname {
@@ -2722,8 +2750,8 @@
           font-size: clamp(28px, 10.5vw, 36px);
         }
 
-        .profile-media {
-          width: min(144px, 48vw);
+        .hero-mobile-photo .profile-media {
+          width: min(185px, 64vw);
         }
 
         .education-title,
@@ -3880,27 +3908,6 @@
 
         document.addEventListener('pointerleave', () => cursor.classList.remove('hover'));
         window.addEventListener('blur', () => cursor.classList.remove('hover'));
-      })();
-    </script>
-    <script>
-      (function () {
-        // Make hero/profile images lazy on narrow viewports to reduce initial payload on mobile
-        const profiles = document.querySelectorAll('.profile-photo');
-        function setMobileLazy() {
-          if (!profiles || profiles.length === 0) return;
-          if (window.innerWidth <= 520) {
-            profiles.forEach(img => {
-              if (img.getAttribute('loading') !== 'lazy') img.setAttribute('loading', 'lazy');
-              if (img.hasAttribute('fetchpriority')) img.removeAttribute('fetchpriority');
-            });
-          }
-        }
-        setMobileLazy();
-        let t = null;
-        window.addEventListener('resize', () => {
-          clearTimeout(t);
-          t = setTimeout(setMobileLazy, 150);
-        }, { passive: true });
       })();
     </script>
   </body>
