@@ -2878,13 +2878,12 @@
                 <span class="given">YASASWINI</span>
               </div>
               <div class="intro-lines">
-                <span class="role-line">Aspiring Data Analyst</span>
-                <span>// turning raw data into gold-layer insights</span>
-                <span>// data science x advanced sql x Python</span>
+                <span class="role-line">Aspiring Data Analyst &amp; AI Application Developer</span>
+                <span>// Data Analytics x Power BI x Python x Generative AI</span>
               </div>
               <p>
-                I turn messy data into clear insights and dashboards that help teams make
-                confident decisions.
+                I turn raw data into actionable insights and build data-driven and AI-powered
+                applications that solve real-world problems.
               </p>
               <div class="hero-actions">
                 <a class="btn btn-primary" href="#projects">View Work</a>
@@ -3762,30 +3761,38 @@
               return;
             }
             const ctx = canvas.getContext('2d');
-            function resizeStatic() {
-              const rect = canvas.getBoundingClientRect();
+            const stage = canvas.parentElement;
+            function renderStatic() {
+              /* A section using content-visibility can initially measure as 0px
+                 on mobile. Draw from the visible chart container instead. */
+              const rect = stage.getBoundingClientRect();
+              if (rect.width < 1 || rect.height < 1) return;
               const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-              canvas.width = Math.max(300, rect.width) * dpr;
-              canvas.height = Math.max(120, rect.height) * dpr;
-              canvas.style.width = rect.width + 'px';
-              canvas.style.height = rect.height + 'px';
+              const w = Math.round(rect.width);
+              const h = Math.round(rect.height);
+              canvas.width = w * dpr;
+              canvas.height = h * dpr;
               ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-            }
-            function drawStatic() {
-              const rect = canvas.getBoundingClientRect();
-              const w = rect.width, h = rect.height;
               ctx.clearRect(0, 0, w, h);
               ctx.strokeStyle = 'rgba(67,165,255,0.9)';
-              ctx.lineWidth = 2;
+              ctx.lineWidth = 2.25;
               ctx.beginPath();
-              ctx.moveTo(0, h * 0.6);
-              ctx.quadraticCurveTo(w * 0.25, h * 0.4, w * 0.5, h * 0.55);
-              ctx.quadraticCurveTo(w * 0.75, h * 0.7, w, h * 0.5);
+              ctx.moveTo(0, h * 0.7);
+              ctx.quadraticCurveTo(w * 0.22, h * 0.48, w * 0.48, h * 0.58);
+              ctx.quadraticCurveTo(w * 0.72, h * 0.74, w, h * 0.32);
               ctx.stroke();
+              ctx.fillStyle = '#ffffff';
+              ctx.beginPath();
+              ctx.arc(w, h * 0.32, 3, 0, Math.PI * 2);
+              ctx.fill();
             }
-            resizeStatic();
-            drawStatic();
-            window.addEventListener('resize', () => { resizeStatic(); drawStatic(); }, { passive: true });
+            renderStatic();
+            requestAnimationFrame(renderStatic);
+            window.addEventListener('load', renderStatic, { once: true });
+            window.addEventListener('resize', renderStatic, { passive: true });
+            if ('ResizeObserver' in window) {
+              new ResizeObserver(renderStatic).observe(stage);
+            }
             if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
             window.addEventListener('beforeunload', () => window.scrollTo(0, 0));
             window.addEventListener('load', () => setTimeout(() => window.scrollTo(0, 0), 0));
