@@ -944,11 +944,49 @@
       }
 
       .intro-lines .role-line {
+        display: flex;
+        align-items: baseline;
+        flex-wrap: nowrap;
+        gap: 10px;
         font-size: clamp(24px, 3vw, 34px);
         font-weight: 800;
         color: var(--text);
         letter-spacing: 0.8px;
         white-space: nowrap;
+      }
+
+      .fixed-word {
+        color: var(--text);
+        font-weight: 800;
+      }
+
+      .typed-role {
+        display: inline-block;
+        min-width: 0.8ch;
+        color: var(--neon-blue);
+        font-weight: 900;
+        text-shadow: 0 0 10px rgba(0, 119, 255, 0.42);
+        white-space: nowrap;
+      }
+
+      .typed-role::after {
+        content: "";
+        display: inline-block;
+        width: 2px;
+        height: 1em;
+        margin-left: 4px;
+        vertical-align: -0.12em;
+        background: var(--neon-blue);
+        animation: roleCursor 0.8s steps(1) infinite;
+      }
+
+      @keyframes roleCursor {
+        0%, 50% {
+          opacity: 1;
+        }
+        50.1%, 100% {
+          opacity: 0;
+        }
       }
 
       .neon-word {
@@ -2878,7 +2916,10 @@
                 <span class="given">YASASWINI</span>
               </div>
               <div class="intro-lines">
-                <span class="role-line">Aspiring Data Analyst &amp; AI Application Developer</span>
+                <span class="role-line">
+                  <span class="fixed-word">Aspiring</span>
+                  <span class="typed-role">Data Analyst</span>
+                </span>
                 <span>// Data Analytics x Power BI x Python x Generative AI</span>
               </div>
               <p>
@@ -3361,6 +3402,50 @@
       );
 
       document.querySelectorAll(".skill-level-fill").forEach((bar) => skillObserver.observe(bar));
+
+      function setupTypingAnimation() {
+        const element = document.querySelector('.typed-role');
+        if (!element) return;
+
+        const roles = ['Data Analyst', 'Backend Developer'];
+        let roleIndex = 0;
+        let charIndex = 0;
+        let deleting = false;
+
+        const tick = () => {
+          const currentRole = roles[roleIndex];
+          element.textContent = deleting
+            ? currentRole.slice(0, charIndex)
+            : currentRole.slice(0, charIndex + 1);
+
+          if (!deleting && charIndex < currentRole.length) {
+            charIndex += 1;
+            setTimeout(tick, 110);
+            return;
+          }
+
+          if (!deleting && charIndex === currentRole.length) {
+            deleting = true;
+            setTimeout(tick, 1100);
+            return;
+          }
+
+          if (deleting && charIndex > 0) {
+            charIndex -= 1;
+            setTimeout(tick, 60);
+            return;
+          }
+
+          deleting = false;
+          roleIndex = (roleIndex + 1) % roles.length;
+          charIndex = 0;
+          setTimeout(tick, 260);
+        };
+
+        setTimeout(tick, 300);
+      }
+
+      setupTypingAnimation();
 
       if (window.matchMedia('(pointer: fine)').matches) {
         document.querySelectorAll(".tilt-card").forEach((card) => {
